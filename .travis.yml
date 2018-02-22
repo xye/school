@@ -1,9 +1,24 @@
 stages:
+- name: Setup env
 - name: test
 - name: Build & Post on GitHub
   if: branch = master
 jobs:
   include:
+  - stage: Setup env
+    sudo: required
+    language: php
+    php: '7.1'
+    services:
+    - docker
+    before_script:
+    - composer install
+    - cd package
+    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
+    - cd ../scripts
+    - sudo service mysql stop
+    script:
+      - ./SetupEnvAndRunTests.sh $dev_community_username $dev_community_password 7.11 Pro $github_username $github_password workspace/sugardocker/data/app/sugar
   - stage: test
     language: php
     php: '7.1'
