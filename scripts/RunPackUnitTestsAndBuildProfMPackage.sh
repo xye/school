@@ -1,9 +1,12 @@
+# This script is designed specifically for Jenkins.  It runs the Jasmine and PHPUnit tests associated with the Pack
+# script.  It also builds the Professor M module loadable package.
+
 # If you are running Jenkins in a Docker container and mounting /var/jenkins_home to a directory on your machine's
 # local filesystem, you may need to update LOCALWORKSPACEPATH to reflect the path to the Jenkins workspace on your local
 # filesystem (for example: "/Users/lschaefer/jenkins/workspace/ProfessorM". The easiest way to update LOCALWORKSPACEPATH
 # is to pass in the value as an argument when you call this script.
-ARG=$1
-LOCALWORKSPACEPATH=${ARG:=$WORKSPACE}
+
+LOCALWORKSPACEPATH=$1
 
 # Remove any lingering containers from previously failed builds
 docker rm my-yarn --force || true
