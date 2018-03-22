@@ -88,7 +88,8 @@ then
     #          - ../../
     #
     # The "../.." are replaced with the path to the Sugar Docker Directory
-
+    echo "Updating $ymlPath..."
+    echo "PATH_TO_SUGAR_DOCKER_ON_HOST: $PATH_TO_SUGAR_DOCKER_ON_HOST"
     perl -0777 -i -pe "s#(volumes\:\n *- )\.\.\/\.\.#\1$PATH_TO_SUGAR_DOCKER_ON_HOST#g" $ymlPath
 fi
 
