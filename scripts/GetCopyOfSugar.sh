@@ -149,6 +149,8 @@ rm -f $cookieFile
 # Authenticate to the community
 ######################################################################
 
+echo "Authenticating to Developer Builds Community..."
+
 #TODO: Replace ./mycookie with variable
 response="$(curl -v -c ./mycookie -b ./mycookie 'https://community.sugarcrm.com/login.jspa?ssologin=true&fragment=&referer=%2Fcommunity%2Fdeveloper%2Fdeveloper-builds' 2>&1)"
 checkStatusCode "302" "$response"

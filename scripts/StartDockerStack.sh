@@ -7,7 +7,6 @@
 # Variables
 ######################################################################
 
-#TODO: fix this for dockerDirectory
 if [[ -z "$1" ]] || [[ -z "$2" ]]
 then
     echo "Not all required command line arguments were set. Please run the script again with the required arguments:
@@ -46,10 +45,9 @@ fi
 
 
 ######################################################################
-# Start the Docker Stack
+# Get latest stack from Sugar Docker repo
 ######################################################################
 
-# Get the latest changes from the Sugar Docker repo
 if [ -d "$dockerDirectory" ];
 then
     cwd=$(pwd)
@@ -60,6 +58,24 @@ then
 else
     git clone $dockerGitRepo $dockerDirectory
 fi
+
+
+######################################################################
+# Stop any previously running stack
+######################################################################
+
+echo "Stopping any containers running from a previous Sugar Docker stack..."
+docker-compose -f $ymlPath down
+docker stop sugar-cron
+docker stop sugar-web1
+docker stop sugar-elasticsearch
+docker stop sugar-redis
+docker stop sugar-mysql
+
+
+######################################################################
+# Start the Docker Stack
+######################################################################
 
 # Special case for when this code is being run from Jenkins running on Docker.
 # We need to update the Sugar Docker stack yml file to have a hard coded path to the Sugar Docker directory on the
@@ -77,4 +93,5 @@ then
 fi
 
 # Start the Sugar Docker stack
+echo "Starting $ymlPath..."
 docker-compose -f $ymlPath up -d

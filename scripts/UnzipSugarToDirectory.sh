@@ -39,8 +39,7 @@ cd "$(dirname "$sugarDirectory")"
 echo "Unzipping $sugarZipFileName..."
 unzip -q $sugarZipFileName
 echo "Finished unzipping Sugar"
-# TODO not sure if this sleep is necessary
-# sleep 10
+sleep 10
 
 # Delete the zip file as we no longer need it
 rm $sugarZipFileName
