@@ -25,6 +25,9 @@ docker exec $containerId bash -c "apk update"
 # Install pip
 docker exec $containerId bash -c "apk add py-pip"
 
+# Upgrade pip
+docker exec $containerId bash -c "pip install --upgrade pip"
+
 # Install docker-compose
 docker exec $containerId bash -c "pip install docker-compose"
 
@@ -32,4 +35,4 @@ docker exec $containerId bash -c "pip install docker-compose"
 docker exec $containerId bash -c "ln -s /usr/bin/docker-compose /usr/local/bin/docker-compose"
 
 # Install perl
-docker exec $containerId bash -c "pip install perl"
+docker exec $containerId bash -c "apk add perl"
