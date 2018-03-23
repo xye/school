@@ -8,16 +8,22 @@ if [[ -z "$1" ]]
 then
     echo "Not all required command line arguments were set. Please run the script again with the required arguments:
         1: The path to your Jenkins home directory on your host machine
-        2: The path to the Sugar Docker git repo on your host machine
+        2: (Optional) Additional params for the docker run command.  For example, you may want to mount a volume that
+           contains Sugar source zips or you may want to mount a volume that contains a local copy of the Sugar Docker
+           repo (-v /Users/lschaefer/git/sugardocker:/var/sugardocker).
 
-        For example: ./PrepareJenkinsDockerContainer.sh /Users/lschaefer/jenkins /Users/lschaefer/git/sugardocker"
+        For example: ./PrepareJenkinsDockerContainer.sh /Users/lschaefer/jenkins2 \"-v /Users/lschaefer/git/sugardocker:/var/sugardocker\""
 fi
 
+# The path to your Jenkins home directory on your host machine
 jenkinsHome=$1
-sugarDockerRepoPath=$2
+
+# Additional params for the docker run command
+additionalParams=$2
+
 
 # Start Jenkins
-containerId=$(docker run -u root --rm -d -p 8080:8080 -v $jenkinsHome:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v $sugarDockerRepoPath:/var/sugardocker jenkinsci/blueocean)
+containerId=$(docker run -u root --rm -d -p 8080:8080 -v $jenkinsHome:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock $additionalParams jenkinsci/blueocean)
 
 # Get the latest packages
 docker exec $containerId bash -c "apk update"
