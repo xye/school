@@ -19,7 +19,6 @@ $sugar_config_si = array (
     'setup_db_create_sugarsales_user' => 0,
     'setup_db_database_name' => 'sugar',
     'setup_db_drop_tables' => 1,
-    'setup_db_host_instance' => '',
     'setup_db_host_name' => 'sugar-mysql',
     'setup_db_type' => 'mysql',
     'setup_fts_host' => 'sugar-elasticsearch',

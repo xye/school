@@ -24,6 +24,9 @@ sugarDirectory=$1
 # Copy the config file that the Install will use to the Sugar directory
 cp config_si.php $sugarDirectory/config_si.php
 
+# Copy the config override
+cp config_override.php $sugarDirectory/config_override.php
+
 # Copy the silent install script to the Sugar directory
 cp cliSilentInstall.php $sugarDirectory/cliSilentInstall.php
 

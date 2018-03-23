@@ -1,5 +1,9 @@
 #!/usr/bin/env php
+
 <?php
+
+# Script taken from https://github.com/sugarcrm/IPRestrictionManager/blob/master/.travis/cliModuleInstall.php
+
 function output_msg($msg)
 {
     $full_msg = $msg . "\n";
@@ -93,8 +97,8 @@ function perform_module_install($opts)
             perform_module_uninstall($installed, true);
         }
     }
-    output_msg("Copying {$opts['zip_file']} into {$local_zip_file}.");
-    copy($opts['zip_file'], $local_zip_file);
+    //output_msg("Copying {$opts['zip_file']} into {$local_zip_file}.");
+    //copy($opts['zip_file'], $local_zip_file);
     // Start installation
     output_msg("Patching ${opts['instance_path']}.");
     $modInstaller->install($opts['expanded_zip']);
