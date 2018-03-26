@@ -146,6 +146,8 @@ ls
 # Delete the cookie jar file if it exists
 rm -f $cookieFile
 
+touch $cookieFile
+
 
 ######################################################################
 # Authenticate to the community
