@@ -148,7 +148,7 @@ rm -f $cookieFile
 
 # Create the cookie file and set the file permissions (required for Travis CI)
 sudo touch $cookieFile
-sudo chmod 777 $cookieFile
+chmod -R 777 $sugarDirectory
 
 
 ######################################################################
