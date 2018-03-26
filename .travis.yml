@@ -18,7 +18,7 @@ jobs:
     - cd ../scripts
     - sudo service mysql stop
     script:
-      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.11 Pro $github_username $github_password workspace/sugardocker
+      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.11 Ent $github_username $github_password workspace/sugardocker
   - stage: test
     language: php
     php: '7.1'
