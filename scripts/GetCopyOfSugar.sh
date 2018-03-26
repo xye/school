@@ -22,7 +22,7 @@ then
            source zip files will be downloaded from the SugarCRM Developer Builds Community.  The Sugar source zip files
            should be named with the following pattern: Sugar$sugarEdition-$sugarVersion. For example: SugarEnt-7.11
 
-        For example: ./GetCopyOfSugar.sh email@example.com mypassword SugarEnt-7.11 ../sugar_source_zips"
+        For example: ./GetCopyOfSugar.sh email@example.com mypassword SugarEnt-7.11 workspace/sugardocker/data/app ../sugar_source_zips"
     exit 1
 fi
 
@@ -41,8 +41,8 @@ sugarDirectory=$4
 # Path to where existing Sugar source zip files are stored
 sugarSourceZipsDirectory=$5
 
-# The name of the cookie jar file where the cookies required for this script will be stored
-cookieFile="mycookie"
+# The path to the cookie jar file (relative to the Sugar directory) where the cookies required for this script will be stored
+cookieFile="./mycookie"
 
 
 ######################################################################
@@ -151,31 +151,30 @@ rm -f $cookieFile
 
 echo "Authenticating to Developer Builds Community..."
 
-#TODO: Replace ./mycookie with variable
-response="$(curl -v -c ./mycookie -b ./mycookie 'https://community.sugarcrm.com/login.jspa?ssologin=true&fragment=&referer=%2Fcommunity%2Fdeveloper%2Fdeveloper-builds' 2>&1)"
+response="$(curl -v -c $cookieFile -b $cookieFile 'https://community.sugarcrm.com/login.jspa?ssologin=true&fragment=&referer=%2Fcommunity%2Fdeveloper%2Fdeveloper-builds' 2>&1)"
 checkStatusCode "302" "$response"
 location="$(getLocationFromResponse "$response")"
 
 # Location should be something like https://auth.sugarcrm.com/saml2/idp/SSOService?SAMLRequest=fZHNbsIwEIRfxdp7EjuUn1okiBahIlGBSOihNxMMGCV26nVQ%2B%2FZ1IahUlTh6vbPf7sxw9FmV5CQtKqMTYCEFInVhtkrvE1jn02AAo3SIoirjmo8bd9Ar%2BdFIdMQLNfLLTwKN1dwIVMi1qCRyV%2FBs%2FDrncUh5bY0zhSmBjBGldR71bDQ2lbSZtCdVyPVqnsDBuRp5FBWmqhqt3FeIzV7YwlahL0U%2FpAjRAJl4vNLCnVe%2BqoTf7b8gjtS2jrJs0YKATI0t5PmQBHaiRF%2BaTRIQjPXo8aAGne6OdukDUxsmYnHsql7M2KNvwqVAVCf5K0Ns5EyjE9olEFM2CGgcsDhnfU47nPZD1um%2FA1m25z8pfbH1nlebSxPylzxfBstFlgN5u8bjG6ANg5%2Fp9jaF%2B4PF1XpI7xs9jG4Bafv8G376DQ%3D%3D&RelayState=L2NvbW11bml0eS9kZXZlbG9wZXIvZGV2ZWxvcGVyLWJ1aWxkcw%3D%3D
-response="$(curl -v -c ./mycookie -b ./mycookie $location 2>&1)"
+response="$(curl -v -c $cookieFile -b $cookieFile $location 2>&1)"
 checkStatusCode "302" "$response"
 location="$(getLocationFromResponse "$response")"
 
 # Location should be something like https://auth.sugarcrm.com/saml2/idp/authpage?ReturnTo=https%3A%2F%2Fauth.sugarcrm.com%2Fsaml2%2Fidp%2FSSOService%3Fspentityid%3Dhttps%253A%252F%252Fcommunity.sugarcrm.com%26RelayState%3DL2NvbW11bml0eS9kZXZlbG9wZXIvZGV2ZWxvcGVyLWJ1aWxkcw%253D%253D
-response="$(curl -v -c ./mycookie -b ./mycookie $location 2>&1)"
+response="$(curl -v -c $cookieFile -b $cookieFile $location 2>&1)"
 checkStatusCode "200" "$response"
 token="$(getHiddenFormFieldValue "_token" "$response")"
 
-response="$(curl -v -c ./mycookie -b ./mycookie --data "_token=$token&email=$email&password=$password" https://auth.sugarcrm.com/saml2/idp/authpage?ReturnTo=https%3A%2F%2Fauth.sugarcrm.com%2Fsaml2%2Fidp%2FSSOService%3Fspentityid%3Dhttps%253A%252F%252Fcommunity.sugarcrm.com%26RelayState%3DL2NvbW11bml0eS9kZXZlbG9wZXIvZGV2ZWxvcGVyLWJ1aWxkcw%253D%253D 2>&1)"
+response="$(curl -v -c $cookieFile -b $cookieFile --data "_token=$token&email=$email&password=$password" https://auth.sugarcrm.com/saml2/idp/authpage?ReturnTo=https%3A%2F%2Fauth.sugarcrm.com%2Fsaml2%2Fidp%2FSSOService%3Fspentityid%3Dhttps%253A%252F%252Fcommunity.sugarcrm.com%26RelayState%3DL2NvbW11bml0eS9kZXZlbG9wZXIvZGV2ZWxvcGVyLWJ1aWxkcw%253D%253D 2>&1)"
 checkStatusCode "302" "$response"
 location="$(getLocationFromResponse "$response")"
 
 # Location should be something like 'https://auth.sugarcrm.com/saml2/idp/SSOService?spentityid=https%3A%2F%2Fcommunity.sugarcrm.com&RelayState=L2NvbW11bml0eS9kZXZlbG9wZXIvZGV2ZWxvcGVyLWJ1aWxkcw%3D%3D'
-response="$(curl -v -c ./mycookie -b ./mycookie $location 2>&1)"
+response="$(curl -v -c $cookieFile -b $cookieFile $location 2>&1)"
 checkStatusCode "200" "$response"
 samlResponse="$(getHiddenFormFieldValue "SAMLResponse" "$response")"
 
-response="$(curl -v -c ./mycookie -b ./mycookie --data-urlencode "SAMLResponse=$samlResponse&RelayState=L2NvbW11bml0eS9kZXZlbG9wZXIvZGV2ZWxvcGVyLWJ1aWxkcw==" 'https://community.sugarcrm.com/saml/sso' 2>&1)"
+response="$(curl -v -c $cookieFile -b $cookieFile --data-urlencode "SAMLResponse=$samlResponse" --data-urlencode "RelayState=L2NvbW11bml0eS9kZXZlbG9wZXIvZGV2ZWxvcGVyLWJ1aWxkcw==" 'https://community.sugarcrm.com/saml/sso' 2>&1)"
 checkStatusCode "302" "$response"
 
 
