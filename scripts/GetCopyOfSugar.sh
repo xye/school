@@ -146,6 +146,7 @@ ls
 # Delete the cookie jar file if it exists
 rm -f $cookieFile
 
+# Create the cookie file and set the file permissions (required for Travis CI)
 sudo touch $cookieFile
 sudo chmod 777 $cookieFile
 
@@ -239,6 +240,12 @@ echo "Beginning download of $sugarName from $downloadUrl"
 response="$(curl -v -c ./mycookie -b ./mycookie -o $sugarName.zip $downloadUrl 2>&1)"
 checkStatusCode "200" "$response"
 echo "Download complete"
+
+pwd
+echo "***************"
+ls
+echo "***************"
+
 
 # Check we didn't get an empty zip file
 fileSize=$(wc -c <"$sugarName.zip")
