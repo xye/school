@@ -1,11 +1,22 @@
 stages:
-- name: Setup env
-- name: test
+- name: Test PackageGenerator
+- name: Run PHPUnit
 - name: Build & Post on GitHub
   if: branch = master
 jobs:
   include:
-  - stage: Setup env
+  - stage: Test PackageGenerator
+    language: php
+    php: '7.1'
+    os: linux
+    before_script:
+    - composer install
+  - stage: Test PackageGenerator
+    language: node_js
+    node_js: '9'
+    before_install:
+    - yarn global add grunt-cli
+  - stage: Run PHPUnit
     sudo: required
     language: php
     php: '7.1'
@@ -19,17 +30,6 @@ jobs:
     - sudo service mysql stop
     script:
       - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.11 Ent $github_username $github_password workspace/sugardocker
-  - stage: test
-    language: php
-    php: '7.1'
-    os: linux
-    before_script:
-    - composer install
-  - stage: test
-    language: node_js
-    node_js: '9'
-    before_install:
-    - yarn global add grunt-cli
   - stage: Build & Post on GitHub
     language: php
     php: '7.1'
