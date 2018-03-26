@@ -3,6 +3,12 @@ stages:
 - name: Run PHPUnit
 - name: Build & Post on GitHub
   if: branch = master
+env:
+- SUGAR_VERSION=7.10
+- SUGAR_VERSION=7.11
+- SUGAR_EDITION=PRO
+- SUGAR_EDITION=ENT
+- SUGAR_EDITION=ULT
 jobs:
   include:
   - stage: Test PackageGenerator
@@ -29,7 +35,7 @@ jobs:
     - cd ../scripts
     - sudo service mysql stop
     script:
-      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.11 Ent $github_username $github_password workspace/sugardocker
+      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password $SUGAR_VERSION $SUGAR_EDITION $github_username $github_password workspace/sugardocker
   - stage: Build & Post on GitHub
     language: php
     php: '7.1'
