@@ -140,6 +140,8 @@ fi
 
 # Change to the Sugar directory
 cd $sugarDirectory
+pwd
+ls
 
 # Delete the cookie jar file if it exists
 rm -f $cookieFile
@@ -155,6 +157,10 @@ response="$(curl -v -c $cookieFile -b $cookieFile 'https://community.sugarcrm.co
 checkStatusCode "302" "$response"
 location="$(getLocationFromResponse "$response")"
 echo "the response is $response"
+echo "****************************************************************************"
+
+ls
+
 echo "****************************************************************************"
 
 # Location should be something like https://auth.sugarcrm.com/saml2/idp/SSOService?SAMLRequest=fZHNbsIwEIRfxdp7EjuUn1okiBahIlGBSOihNxMMGCV26nVQ%2B%2FZ1IahUlTh6vbPf7sxw9FmV5CQtKqMTYCEFInVhtkrvE1jn02AAo3SIoirjmo8bd9Ar%2BdFIdMQLNfLLTwKN1dwIVMi1qCRyV%2FBs%2FDrncUh5bY0zhSmBjBGldR71bDQ2lbSZtCdVyPVqnsDBuRp5FBWmqhqt3FeIzV7YwlahL0U%2FpAjRAJl4vNLCnVe%2BqoTf7b8gjtS2jrJs0YKATI0t5PmQBHaiRF%2BaTRIQjPXo8aAGne6OdukDUxsmYnHsql7M2KNvwqVAVCf5K0Ns5EyjE9olEFM2CGgcsDhnfU47nPZD1um%2FA1m25z8pfbH1nlebSxPylzxfBstFlgN5u8bjG6ANg5%2Fp9jaF%2B4PF1XpI7xs9jG4Bafv8G376DQ%3D%3D&RelayState=L2NvbW11bml0eS9kZXZlbG9wZXIvZGV2ZWxvcGVyLWJ1aWxkcw%3D%3D
