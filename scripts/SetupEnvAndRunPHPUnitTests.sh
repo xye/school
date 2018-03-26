@@ -59,7 +59,7 @@ sugarSourceZipsDirectory=$8
 # Setup
 ######################################################################
 
-chmod -R 777 .
+sudo chmod -R 777 .
 
 mkdir workspace
 
