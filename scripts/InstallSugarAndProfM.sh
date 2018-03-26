@@ -37,8 +37,7 @@ cp cliModuleInstall.php $sugarDirectory/cliModuleInstall.php
 cp ../package/releases/sugarcrm-ProfessorM-*-standard.zip $sugarDirectory/sugarcrm-ProfessorM-standard.zip
 
 # Update the permissions for the Sugar directory
-#TODO: not sure if we need to sudo this
-chmod -R 777 $sugarDirectory
+sudo chmod -R 777 $sugarDirectory -q
 
 
 ######################################################################
