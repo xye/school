@@ -147,6 +147,7 @@ ls
 rm -f $cookieFile
 
 sudo touch $cookieFile
+sudo chmod 777 $cookieFile
 
 
 ######################################################################
