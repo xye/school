@@ -36,7 +36,7 @@ jobs:
     - cd ../scripts
     - sudo service mysql stop
     script:
-      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password $SUGAR_VERSION $SUGAR_EDITION $github_username $github_password workspace/sugardocker
+      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password ${SUGAR_VERSION} ${SUGAR_EDITION} $github_username $github_password workspace/sugardocker
   - stage: Build & Post on GitHub
     language: php
     php: '7.1'
