@@ -1,6 +1,6 @@
 stages:
 - name: Test PackageGenerator
-- name: Run PHPUnit
+- name: Test
 - name: Build & Post on GitHub
   if: branch = master
 env:
@@ -10,7 +10,7 @@ env:
   - SUGAR_VERSION=7.11 SUGAR_EDITION=Pro
   - SUGAR_VERSION=7.11 SUGAR_EDITION=Ent
   - SUGAR_VERSION=7.11 SUGAR_EDITION=Ult
-jobs:  
+jobs:
   include:
   - stage: Test PackageGenerator
     language: php
@@ -23,7 +23,7 @@ jobs:
     node_js: '9'
     before_install:
     - yarn global add grunt-cli
-  - stage: Run PHPUnit
+  - stage: Test
     sudo: required
     language: php
     php: '7.1'
