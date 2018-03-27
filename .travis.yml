@@ -29,8 +29,6 @@ jobs:
     php: '7.1'
     services:
     - docker
-    env:
-    - SUGAR_VERSION=7.10 SUGAR_EDITION=Pro
     before_script:
     - composer install
     - cd package
