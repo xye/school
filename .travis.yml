@@ -10,7 +10,7 @@ env:
   - SUGAR_VERSION=7.11 SUGAR_EDITION=Pro
   - SUGAR_VERSION=7.11 SUGAR_EDITION=Ent
   - SUGAR_VERSION=7.11 SUGAR_EDITION=Ult
-jobs:
+jobs:  
   include:
   - stage: Test PackageGenerator
     language: php
