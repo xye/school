@@ -1,15 +1,8 @@
 stages:
 - name: Test PackageGenerator
-- name: Test
+- name: Run PHPUnit
 - name: Build & Post on GitHub
   if: branch = master
-env:
-  - SUGAR_VERSION=7.10 SUGAR_EDITION=Pro
-  - SUGAR_VERSION=7.10 SUGAR_EDITION=Ent
-  - SUGAR_VERSION=7.10 SUGAR_EDITION=Ult
-  - SUGAR_VERSION=7.11 SUGAR_EDITION=Pro
-  - SUGAR_VERSION=7.11 SUGAR_EDITION=Ent
-  - SUGAR_VERSION=7.11 SUGAR_EDITION=Ult
 jobs:
   include:
   - stage: Test PackageGenerator
@@ -23,12 +16,46 @@ jobs:
     node_js: '9'
     before_install:
     - yarn global add grunt-cli
-  - stage: Test
+  - stage: Run PHPUnit
     sudo: required
     language: php
     php: '7.1'
     services:
     - docker
+    env:
+    - SUGAR_VERSION=7.11 SUGAR_EDITION=Pro
+    before_script:
+    - composer install
+    - cd package
+    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
+    - cd ../scripts
+    - sudo service mysql stop
+    script:
+      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password $SUGAR_VERSION $SUGAR_EDITION $github_username $github_password workspace/sugardocker
+  - stage: Run PHPUnit
+    sudo: required
+    language: php
+    php: '7.1'
+    services:
+    - docker
+    env:
+    - SUGAR_VERSION=7.11 SUGAR_EDITION=Pro
+    before_script:
+    - composer install
+    - cd package
+    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
+    - cd ../scripts
+    - sudo service mysql stop
+    script:
+      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password $SUGAR_VERSION $SUGAR_EDITION $github_username $github_password workspace/sugardocker
+  - stage: Run PHPUnit
+    sudo: required
+    language: php
+    php: '7.1'
+    services:
+    - docker
+    env:
+    - SUGAR_VERSION=7.11 SUGAR_EDITION=Ult
     before_script:
     - composer install
     - cd package
