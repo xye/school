@@ -2,7 +2,7 @@ stages:
 - name: Test PackageGenerator
 - name: Run PHPUnit
 - name: Build & Post on GitHub
-  if: branch = master
+#  if: branch = master
 jobs:
   include:
   - stage: Test PackageGenerator
