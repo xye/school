@@ -26,7 +26,7 @@ jobs:
     - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
     - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S') -w 40" #Using 40 as a typical path length. May not work for all Windows installations
     deploy:
-    skip_cleanup: true
+      skip_cleanup: true
   - stage: Run PHPUnit
     sudo: required
     language: php
