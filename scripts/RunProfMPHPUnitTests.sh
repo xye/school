@@ -9,13 +9,10 @@
 ######################################################################
 
 # Change to the directory where the Sugar PHPUnit tests are stored and update permissions
-#cd $sugarDirectory/custom/tests/School/unit-php
-#chmod +x ../../../../vendor/bin/phpunit
 docker exec sugar-web1 bash -c "cd custom/tests/School/unit-php && chmod +x ../../../../vendor/bin/phpunit"
 
 ######################################################################
 # Run the Professor M PHPUnit tests
 ######################################################################
 
-#../../../../vendor/bin/phpunit
 docker exec sugar-web1 bash -c "cd custom/tests/School/unit-php && ../../../../vendor/bin/phpunit"

@@ -70,7 +70,6 @@ class StudentGradebookJobTest extends \PHPUnit_Framework_TestCase
         $actual = $this->sgJob->run($this->job->data);
 
         $this->assertTrue($actual);
-        $this->assertTrue(false);
     }
 
     /**

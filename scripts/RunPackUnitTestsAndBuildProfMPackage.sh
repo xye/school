@@ -32,4 +32,3 @@ docker exec my-composer sh -c "cd package && php ./pack.php -v jenkins -w 40"
 # Remove the containers
 docker rm my-yarn --force
 docker rm my-composer --force
-
