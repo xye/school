@@ -360,6 +360,7 @@ class PackageGeneratorTest extends TestCase
     public function testShouldIncludeFileInZipValidFileMac(){
         $pg = new PackageGenerator();
         $this->assertTrue($pg->shouldIncludeFileInZip("src/custom/Extension/modules/Accounts/Ext/WirelessLayoutdefs/pr_professors_accounts_Accounts.php"));
+        $this->assertTrue(false);
     }
 
     public function testShouldIncludeFileInZipValidFileWindows(){
