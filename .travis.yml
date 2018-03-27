@@ -3,6 +3,14 @@ stages:
 - name: Run PHPUnit
 - name: Build & Post on GitHub
   if: branch = master
+env:
+  matrix:
+  - SUGAR_VERSION=7.10 SUGAR_EDITION=Pro
+  - SUGAR_VERSION=7.10 SUGAR_EDITION=Ent
+  - SUGAR_VERSION=7.10 SUGAR_EDITION=Ult
+  - SUGAR_VERSION=7.11 SUGAR_EDITION=Pro
+  - SUGAR_VERSION=7.11 SUGAR_EDITION=Ent
+  - SUGAR_VERSION=7.11 SUGAR_EDITION=Ult
 jobs:
   include:
   - stage: Test PackageGenerator
@@ -22,14 +30,6 @@ jobs:
     php: '7.1'
     services:
     - docker
-    env:
-      matrix:
-      - SUGAR_VERSION=7.10 SUGAR_EDITION=Pro
-      - SUGAR_VERSION=7.10 SUGAR_EDITION=Ent
-      - SUGAR_VERSION=7.10 SUGAR_EDITION=Ult
-      - SUGAR_VERSION=7.11 SUGAR_EDITION=Pro
-      - SUGAR_VERSION=7.11 SUGAR_EDITION=Ent
-      - SUGAR_VERSION=7.11 SUGAR_EDITION=Ult
     before_script:
     - composer install
     - cd package
