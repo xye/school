@@ -22,6 +22,14 @@ jobs:
     php: '7.1'
     services:
     - docker
+    env:
+      matrix:
+      - SUGAR_VERSION=7.10 SUGAR_EDITION=Pro
+      - SUGAR_VERSION=7.10 SUGAR_EDITION=Ent
+      - SUGAR_VERSION=7.10 SUGAR_EDITION=Ult
+      - SUGAR_VERSION=7.11 SUGAR_EDITION=Pro
+      - SUGAR_VERSION=7.11 SUGAR_EDITION=Ent
+      - SUGAR_VERSION=7.11 SUGAR_EDITION=Ult
     before_script:
     - composer install
     - cd package
@@ -29,77 +37,77 @@ jobs:
     - cd ../scripts
     - sudo service mysql stop
     script:
-      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.11 Ent $github_username $github_password workspace/sugardocker
-  - stage: Run PHPUnit
-    sudo: required
-    language: php
-    php: '7.1'
-    services:
-    - docker
-    before_script:
-    - composer install
-    - cd package
-    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
-    - cd ../scripts
-    - sudo service mysql stop
-    script:
-      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.11 Pro $github_username $github_password workspace/sugardocker
-  - stage: Run PHPUnit
-    sudo: required
-    language: php
-    php: '7.1'
-    services:
-    - docker
-    before_script:
-    - composer install
-    - cd package
-    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
-    - cd ../scripts
-    - sudo service mysql stop
-    script:
-      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.11 Ult $github_username $github_password workspace/sugardocker
-  - stage: Run PHPUnit
-    sudo: required
-    language: php
-    php: '7.1'
-    services:
-    - docker
-    before_script:
-    - composer install
-    - cd package
-    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
-    - cd ../scripts
-    - sudo service mysql stop
-    script:
-      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.10 Ent $github_username $github_password workspace/sugardocker
-  - stage: Run PHPUnit
-    sudo: required
-    language: php
-    php: '7.1'
-    services:
-    - docker
-    before_script:
-    - composer install
-    - cd package
-    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
-    - cd ../scripts
-    - sudo service mysql stop
-    script:
-      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.10 Pro $github_username $github_password workspace/sugardocker
-  - stage: Run PHPUnit
-    sudo: required
-    language: php
-    php: '7.1'
-    services:
-    - docker
-    before_script:
-    - composer install
-    - cd package
-    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
-    - cd ../scripts
-    - sudo service mysql stop
-    script:
-      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.10 Ult $github_username $github_password workspace/sugardocker
+      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password $SUGAR_VERSION $SUGAR_EDITION $github_username $github_password workspace/sugardocker
+#  - stage: Run PHPUnit
+#    sudo: required
+#    language: php
+#    php: '7.1'
+#    services:
+#    - docker
+#    before_script:
+#    - composer install
+#    - cd package
+#    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
+#    - cd ../scripts
+#    - sudo service mysql stop
+#    script:
+#      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.11 Pro $github_username $github_password workspace/sugardocker
+#  - stage: Run PHPUnit
+#    sudo: required
+#    language: php
+#    php: '7.1'
+#    services:
+#    - docker
+#    before_script:
+#    - composer install
+#    - cd package
+#    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
+#    - cd ../scripts
+#    - sudo service mysql stop
+#    script:
+#      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.11 Ult $github_username $github_password workspace/sugardocker
+#  - stage: Run PHPUnit
+#    sudo: required
+#    language: php
+#    php: '7.1'
+#    services:
+#    - docker
+#    before_script:
+#    - composer install
+#    - cd package
+#    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
+#    - cd ../scripts
+#    - sudo service mysql stop
+#    script:
+#      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.10 Ent $github_username $github_password workspace/sugardocker
+#  - stage: Run PHPUnit
+#    sudo: required
+#    language: php
+#    php: '7.1'
+#    services:
+#    - docker
+#    before_script:
+#    - composer install
+#    - cd package
+#    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
+#    - cd ../scripts
+#    - sudo service mysql stop
+#    script:
+#      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.10 Pro $github_username $github_password workspace/sugardocker
+#  - stage: Run PHPUnit
+#    sudo: required
+#    language: php
+#    php: '7.1'
+#    services:
+#    - docker
+#    before_script:
+#    - composer install
+#    - cd package
+#    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
+#    - cd ../scripts
+#    - sudo service mysql stop
+#    script:
+#      - ./SetupEnvAndRunPHPUnitTests.sh $dev_community_username $dev_community_password 7.10 Ult $github_username $github_password workspace/sugardocker
   - stage: Build & Post on GitHub
     language: php
     php: '7.1'
