@@ -79,12 +79,12 @@ jobs:
   - stage: Build & Post on GitHub
     language: php
     php: '7.1'
-#    before_script:
-#    - composer install
-#    - cd package
-#    script:
-#    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
-#    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S') -w 40" #Using 40 as a typical path length. May not work for all Windows installations
+    before_script:
+    - composer install
+    - cd package
+    script:
+    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
+    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S') -w 40" #Using 40 as a typical path length. May not work for all Windows installations
     before_deploy: git tag "$(date +'%Y%m%d-%H.%M.%S')-$(git log --format=%h -1)"
     deploy:
       file_glob: true
