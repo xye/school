@@ -1,7 +1,9 @@
 stages:
 - name: Test PackageGenerator
+- name: Build Prof M MLP
 - name: Run PHPUnit
 - name: Build & Post on GitHub
+#  if: branch = master
 jobs:
   include:
   - stage: Test PackageGenerator
@@ -15,7 +17,7 @@ jobs:
     node_js: '9'
     before_install:
     - yarn global add grunt-cli
-  - Build Prof M MLP
+  - stage: Build Prof M MLP
     language: php
     php: '7.1'
     before_script:
@@ -24,9 +26,9 @@ jobs:
     script:
     - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
     - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S') -w 40" #Using 40 as a typical path length. May not work for all Windows installations
-#    deploy:
-#      file: releases/sugarcrm-ProfessorM-*.zip
-#      skip_cleanup: true
+    deploy:
+      file: releases/sugarcrm-ProfessorM-*.zip
+      skip_cleanup: true
   - stage: Run PHPUnit
     sudo: required
     language: php
@@ -78,12 +80,12 @@ jobs:
   - stage: Build & Post on GitHub
     language: php
     php: '7.1'
-    before_script:
-    - composer install
-    - cd package
-    script:
-    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
-    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S') -w 40" #Using 40 as a typical path length. May not work for all Windows installations
+#    before_script:
+#    - composer install
+#    - cd package
+#    script:
+#    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S')"
+#    - "./pack.php -v $(date +'%Y%m%d-%H.%M.%S') -w 40" #Using 40 as a typical path length. May not work for all Windows installations
     before_deploy: git tag "$(date +'%Y%m%d-%H.%M.%S')-$(git log --format=%h -1)"
     deploy:
       file_glob: true
